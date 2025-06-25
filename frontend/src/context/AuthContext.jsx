@@ -46,15 +46,30 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const url = new URL(window.location.href);
         const tokenParam = url.searchParams.get('token');
+        const errorParam = url.searchParams.get('error');
+
+        if (errorParam) {
+            console.error("Authentication error:", errorParam);
+            // Clean URL
+            url.searchParams.delete('error');
+            window.history.replaceState({}, document.title, url.pathname);
+        }
 
         if (tokenParam) {
+            console.log("Token received from URL");
             // Save token to state and localStorage
             setToken(tokenParam);
             localStorage.setItem('authToken', tokenParam);
 
             // Remove token from URL to prevent leaks
             url.searchParams.delete('token');
-            window.history.replaceState({}, document.title, url.pathname);
+            window.history.replaceState({}, document.title, url.toString());
+
+            // Force reload to ensure proper route handling
+            if (url.pathname === '/todos') {
+                console.log("On todos page, forcing app refresh");
+                window.location.reload();
+            }
         }
     }, []);
 

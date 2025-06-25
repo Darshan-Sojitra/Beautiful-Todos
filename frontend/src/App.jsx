@@ -64,13 +64,24 @@ function TodoContent() {
     })
       .then(async function (res) {
         if (!res.ok) {
-          throw new Error('Network response was not ok');
+          console.error(`Error fetching todos: ${res.status} ${res.statusText}`);
+          if (res.status === 401) {
+            // Handle unauthorized - token might be invalid
+            throw new Error('Unauthorized - please log in again');
+          }
+          throw new Error(`HTTP error! Status: ${res.status}`);
         }
         const json = await res.json();
+        console.log("Todos fetched successfully:", json);
         setTodos(Array.isArray(json.todos) ? json.todos : []);
       })
       .catch(error => {
         console.error("Failed to fetch todos:", error);
+        // If unauthorized, clear token
+        if (error.message.includes('Unauthorized')) {
+          localStorage.removeItem('authToken');
+          window.location.href = '/';
+        }
       })
       .finally(() => {
         setLoading(false);
@@ -138,6 +149,7 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/todos" element={<TodoContent />} />
+              <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </div>
         </div>

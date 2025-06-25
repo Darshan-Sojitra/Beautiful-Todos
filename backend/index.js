@@ -1,5 +1,11 @@
 // Load environment variables
-require('dotenv').config();
+if (process.env.NODE_ENV === 'production') {
+    require('dotenv').config({ path: '.env.production' });
+    console.log('Loading production environment variables');
+} else {
+    require('dotenv').config();
+    console.log('Loading development environment variables');
+}
 
 const express = require('express');
 const { createTodo, updateTodo } = require('./types');
@@ -41,10 +47,22 @@ app.get('/auth/google',
 app.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/login-failed' }),
     (req, res) => {
-        // Create JWT token for the frontend
-        const token = jwt.sign({ userId: req.user.id }, JWT_SECRET, { expiresIn: '7d' });
-        // Redirect to frontend todos page with token
-        res.redirect(`${process.env.FRONTEND_URL}/todos?token=${token}`);
+        try {
+            console.log("OAuth callback triggered. User authenticated:", req.user?.id);
+
+            // Create JWT token for the frontend
+            const token = jwt.sign({ userId: req.user.id }, JWT_SECRET, { expiresIn: '7d' });
+
+            // Log redirect URL (for debugging)
+            const redirectUrl = `${process.env.FRONTEND_URL}/todos?token=${token}`;
+            console.log("Redirecting to:", redirectUrl);
+
+            // Redirect to frontend todos page with token
+            res.redirect(redirectUrl);
+        } catch (error) {
+            console.error("Error in OAuth callback:", error);
+            res.redirect(`${process.env.FRONTEND_URL}/?error=Authentication_Failed`);
+        }
     }
 );
 
@@ -74,7 +92,23 @@ app.get('/auth/logout', (req, res) => {
     });
 });
 
+// Debug route to test server is responding
+app.get('/healthcheck', (req, res) => {
+    res.json({
+        status: 'ok',
+        environment: process.env.NODE_ENV || 'development',
+        frontendUrl: process.env.FRONTEND_URL || 'Not set'
+    });
+});
 
+// Debug route to check OAuth configuration
+app.get('/auth/config', (req, res) => {
+    res.json({
+        clientID: process.env.GOOGLE_CLIENT_ID ? process.env.GOOGLE_CLIENT_ID.substring(0, 10) + '...' : 'Not set',
+        callbackURL: process.env.GOOGLE_CALLBACK_URL || 'http://localhost:3000/auth/google/callback',
+        frontendURL: process.env.FRONTEND_URL || 'http://localhost:5173'
+    });
+});
 
 // Create a new todo (protected)
 app.post('/todo', verifyToken, async (req, res) => {
