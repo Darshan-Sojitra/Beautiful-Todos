@@ -34,12 +34,7 @@ function HomePage() {
     <div className="welcome-container">
       <h2>Welcome to Todo App</h2>
       <p>Please log in to see your todos</p>
-      <button
-        className="login-button"
-        onClick={() => window.location.href = import.meta.env.VITE_GOOGLE_AUTH_URL}
-      >
-        Login with Google
-      </button>
+
     </div>
   );
 }
