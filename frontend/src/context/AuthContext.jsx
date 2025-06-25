@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
             }
 
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/auth/user`, {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/user`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -60,13 +60,13 @@ export const AuthProvider = ({ children }) => {
 
     // Login function - redirects to Google OAuth
     const login = () => {
-        window.location.href = import.meta.env.VITE_GOOGLE_AUTH_URL || 'http://localhost:3000/auth/google';
+        window.location.href = import.meta.env.VITE_GOOGLE_AUTH_URL;
     };
 
     // Logout function
     const logout = async () => {
         try {
-            await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/auth/logout`, {
+            await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

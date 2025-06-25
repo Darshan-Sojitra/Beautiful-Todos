@@ -12,7 +12,7 @@ const { passport, isAuthenticated, verifyToken, JWT_SECRET } = require('./auth')
 const jwt = require('jsonwebtoken');
 
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173', // Your frontend URL
+    origin: process.env.FRONTEND_URL, // Your frontend URL
     credentials: true
 }));
 

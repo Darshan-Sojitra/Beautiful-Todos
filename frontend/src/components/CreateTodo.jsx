@@ -35,7 +35,7 @@ export function CreateTodo(props) {
             <button
                 className="button"
                 onClick={() => {
-                    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/todo`, {
+                    fetch(`${import.meta.env.VITE_API_URL}/todo`, {
                         method: "POST",
                         body: JSON.stringify({
                             title: title,

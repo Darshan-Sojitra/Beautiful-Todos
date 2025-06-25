@@ -36,7 +36,7 @@ function HomePage() {
       <p>Please log in to see your todos</p>
       <button
         className="login-button"
-        onClick={() => window.location.href = import.meta.env.VITE_GOOGLE_AUTH_URL || 'http://localhost:3000/auth/google'}
+        onClick={() => window.location.href = import.meta.env.VITE_GOOGLE_AUTH_URL}
       >
         Login with Google
       </button>
@@ -57,7 +57,7 @@ function TodoContent() {
       return;
     }
 
-    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/todos`, {
+    fetch(`${import.meta.env.VITE_API_URL}/todos`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }

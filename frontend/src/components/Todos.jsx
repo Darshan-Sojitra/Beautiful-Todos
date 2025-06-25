@@ -27,7 +27,7 @@ export function Todos({ todos: initialTodos, onUpdate, onDelete }) {
             }
 
             // API call to update in database
-            const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/todos/${todo._id}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/todos/${todo._id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export function Todos({ todos: initialTodos, onUpdate, onDelete }) {
             }
 
             // API call to delete from database
-            const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/todos/${todoId}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/todos/${todoId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
