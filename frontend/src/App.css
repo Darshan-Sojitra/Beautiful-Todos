@@ -1,0 +1,323 @@
+/* Modern Minimalist Todo App Styling */
+
+/* Global styles and variables */
+:root {
+    --primary-gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+    --card-bg-color: rgba(255, 255, 255, 0.9);
+    --text-primary: #334155;
+    --text-secondary: #64748b;
+    --accent-color: #8b5cf6;
+    --success-color: #10b981;
+    --border-radius: 12px;
+    --box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    --transition-default: all 0.3s ease;
+}
+
+/* Gradient Background */
+.app-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: var(--primary-gradient);
+    background-size: 200% 200%;
+    animation: gradient-shift 15s ease infinite;
+}
+
+@keyframes gradient-shift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Card styles */
+.card {
+    width: 100%;
+    max-width: 500px;
+    background: var(--card-bg-color);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 2rem;
+    transition: var(--transition-default);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: fade-in 0.5s ease-out;
+}
+
+.card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Header styles */
+.app-title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: transparent;
+    background: var(--primary-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+/* Form elements */
+.input-container {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    color: var(--text-primary);
+    transition: var(--transition-default);
+    outline: none;
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Button styles */
+.button {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-default);
+    box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.2);
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3);
+}
+
+.button:active {
+    transform: translateY(0);
+}
+
+/* Todo items */
+.todo-list {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.todo-item {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: var(--border-radius);
+    padding: 1.25rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: var(--transition-default);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    animation: slide-in 0.3s ease-out;
+}
+
+.todo-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.todo-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.todo-description {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.todo-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.todo-index {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.todo-button {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-default);
+}
+
+.todo-button.complete {
+    background: var(--success-color);
+    color: white;
+}
+
+.todo-button.incomplete {
+    background: var(--accent-color);
+    color: white;
+}
+
+.todo-button.delete {
+    background: #ef4444;
+    color: white;
+}
+
+.todo-button:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: var(--border-radius);
+    border: 1px dashed rgba(139, 92, 246, 0.3);
+}
+
+.empty-title {
+    color: var(--accent-color);
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.empty-text {
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Loading spinner */
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 0;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(139, 92, 246, 0.1);
+    border-left-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animations */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-in {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Decorative elements */
+.decorative-circle {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(50px);
+    z-index: -1;
+}
+
+.circle-1 {
+    top: 10%;
+    left: 10%;
+    width: 150px;
+    height: 150px;
+    background-color: rgba(236, 72, 153, 0.15);
+    animation: float 8s infinite ease-in-out;
+}
+
+.circle-2 {
+    bottom: 10%;
+    right: 10%;
+    width: 200px;
+    height: 200px;
+    background-color: rgba(99, 102, 241, 0.15);
+    animation: float 10s infinite ease-in-out reverse;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-20px) scale(1.05);
+    }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .card {
+        padding: 1.5rem;
+    }
+
+    .app-title {
+        font-size: 1.75rem;
+    }
+}
